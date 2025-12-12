@@ -2,7 +2,7 @@ package com.platzi.play.plataforma;
 
 import java.time.LocalDateTime;
 
-import com.platzi.play.content.Pelicula;
+import com.platzi.play.contenido.Pelicula;
 
 public class Usuario {
     private String nombre;

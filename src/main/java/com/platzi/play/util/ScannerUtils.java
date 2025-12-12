@@ -2,6 +2,8 @@ package com.platzi.play.util;
 
 import java.util.Scanner;
 
+import com.platzi.play.contenido.Genero;
+
 public class ScannerUtils {
     public static final Scanner SCANNER = new Scanner(System.in);
 
@@ -32,4 +34,20 @@ public class ScannerUtils {
         return dato;
     }
 
+    public static Genero capturarGenero(String mensaje){
+        while (true){
+            System.out.println(mensaje + ".... Opciones");
+            for (Genero genero : Genero.values()) {
+                System.out.println("-" + genero.name());
+            }
+            System.out.println("Elge el genero: ");
+            String entrada = SCANNER.nextLine().toUpperCase();
+
+            try {
+                return Genero.valueOf(entrada);
+            } catch (Exception e) {
+                System.out.println("Dato no aceptado. ");
+            }
+        }
+    }
 }

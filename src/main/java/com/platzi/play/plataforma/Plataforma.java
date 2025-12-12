@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.platzi.play.content.Pelicula;
+import com.platzi.play.contenido.Genero;
+import com.platzi.play.contenido.Pelicula;
 
 public class Plataforma {
     private String nombre;
@@ -30,9 +31,9 @@ public class Plataforma {
             .orElse(null);
     }
 
-    public List<Pelicula> buscarPorGenero(String genero) {
+    public List<Pelicula> buscarPorGenero(Genero genero) {
         return contenido.stream()
-            .filter(pelicula -> pelicula.getGenero().equalsIgnoreCase(genero))
+            .filter(pelicula -> pelicula.getGenero().equals(genero))
             .toList();
     }
 
