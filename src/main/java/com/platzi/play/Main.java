@@ -1,5 +1,7 @@
 package com.platzi.play;
 
+import java.util.List;
+
 import com.platzi.play.content.Pelicula;
 import com.platzi.play.plataforma.Plataforma;
 import com.platzi.play.plataforma.Usuario;
@@ -11,9 +13,11 @@ public class Main {
     
     public static final int AGREGAR = 1;
     public static final int MOSTRAR = 2;
-    public static final int BUSCAR = 3;
-    public static final int ELIMINAR = 4;
-    public static final int SALIR = 5;
+    public static final int BUSCAR_POR_TITULO = 3;
+    public static final int BUSCAR_POR_GENERO = 4;
+    public static final int VER_POPULARES = 5;
+    public static final int ELIMINAR = 8;
+    public static final int SALIR = 9;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -21,14 +25,18 @@ public class Main {
 
         cargarPeliculas(plataforma);
 
+        System.out.println("Con " + plataforma.getDuracionTotal() + " minutos de contenido");
+
         while (true) {
             int opcionElegida = ScannerUtils.capturarNumero("""
                 Ingrese una de las siguientes opciones:
                 1. Agregar contenido
                 2. Mostrar todo
                 3. Buscar por titulo
-                4. Eliminar
-                5.salit
+                4. Buscar por genero
+                5. Ver Populares
+                8. Eliminar
+                9.salit
                 """);
 
             switch (opcionElegida) {
@@ -40,8 +48,10 @@ public class Main {
 
                     plataforma.agregar(new Pelicula(titulo, duracion, genero, calificacion));
                 }
-                case MOSTRAR -> plataforma.mostrarTitulos();
-                case BUSCAR -> {
+                case MOSTRAR -> {
+                    plataforma.getTitulos().forEach(System.out::println);
+                }
+                case BUSCAR_POR_TITULO -> {
                     String titulo = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
                     Pelicula pelicula = plataforma.buscarPorTitulo(titulo);
 
@@ -51,6 +61,16 @@ public class Main {
                         System.out.println(titulo + " No existe dentro de la plataforma");
                     }
 
+                }
+                case BUSCAR_POR_GENERO -> {
+                    String genero = ScannerUtils.capturarTexto("Nombre del genero a buscar");
+                    List<Pelicula> peliculas = plataforma.buscarPorGenero(genero);
+
+                    peliculas.forEach(pelicula -> System.out.println(pelicula.obtenerFichaTecnica()));
+                }
+                case VER_POPULARES -> {
+                    List<Pelicula> populares = plataforma.getPopulares();
+                    populares.forEach(pelicula -> System.out.println(pelicula.obtenerFichaTecnica()));
                 }
                 case ELIMINAR -> {
                     String titulo = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");

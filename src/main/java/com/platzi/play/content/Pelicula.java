@@ -32,7 +32,7 @@ public class Pelicula {
 
     public String obtenerFichaTecnica() {
         return """
-                %s (%d)
+                ✨ %s (%d)
                 Género: %s
                 Calificación: %s
                 """.formatted(
