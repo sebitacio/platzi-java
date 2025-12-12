@@ -6,7 +6,6 @@ import com.platzi.play.contenido.Genero;
 import com.platzi.play.contenido.Pelicula;
 import com.platzi.play.excepcion.PeliculaExistenteException;
 import com.platzi.play.plataforma.Plataforma;
-import com.platzi.play.plataforma.Usuario;
 import com.platzi.play.util.ScannerUtils;
 
 public class Main {
