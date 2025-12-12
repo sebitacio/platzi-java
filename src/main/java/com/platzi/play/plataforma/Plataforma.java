@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.platzi.play.contenido.Genero;
 import com.platzi.play.contenido.Pelicula;
+import com.platzi.play.excepcion.PeliculaExistenteException;
 
 public class Plataforma {
     private String nombre;
@@ -17,6 +18,10 @@ public class Plataforma {
     }
 
     public void agregar(Pelicula elemento) {
+        Pelicula pelicula = this.buscarPorTitulo(elemento.getTitulo());
+        if (pelicula != null) {
+            throw new PeliculaExistenteException(pelicula.getTitulo());
+        }
         this.contenido.add(elemento);
     }
 

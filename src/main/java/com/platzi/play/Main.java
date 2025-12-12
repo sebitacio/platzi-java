@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.platzi.play.contenido.Genero;
 import com.platzi.play.contenido.Pelicula;
+import com.platzi.play.excepcion.PeliculaExistenteException;
 import com.platzi.play.plataforma.Plataforma;
 import com.platzi.play.plataforma.Usuario;
 import com.platzi.play.util.ScannerUtils;
@@ -37,7 +38,7 @@ public class Main {
                 4. Buscar por genero
                 5. Ver Populares
                 8. Eliminar
-                9.salit
+                9.salir
                 """);
 
             switch (opcionElegida) {
@@ -47,7 +48,11 @@ public class Main {
                     int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
                     double calificacion = ScannerUtils.capturarDecimal("Calificacion del Contenido");
 
-                    plataforma.agregar(new Pelicula(titulo, duracion, genero, calificacion));
+                    try {
+                        plataforma.agregar(new Pelicula(titulo, duracion, genero, calificacion));
+                    } catch (PeliculaExistenteException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 case MOSTRAR -> {
                     plataforma.getTitulos().forEach(System.out::println);
