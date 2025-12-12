@@ -18,9 +18,11 @@ public class Main {
     public static final int BUSCAR_POR_TITULO = 3;
     public static final int BUSCAR_POR_GENERO = 4;
     public static final int VER_POPULARES = 5;
+    public static final int REPRODUCIR_CONTENIDO = 6;
     public static final int ELIMINAR = 8;
     public static final int SALIR = 9;
 
+    
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
         System.out.println(NOMBRE_PLATAFORMA + " " + VERSION);
@@ -37,6 +39,7 @@ public class Main {
                 3. Buscar por titulo
                 4. Buscar por genero
                 5. Ver Populares
+                6. Reproducir
                 8. Eliminar
                 9.salir
                 """);
@@ -55,7 +58,7 @@ public class Main {
                     }
                 }
                 case MOSTRAR -> {
-                    plataforma.getTitulos().forEach(System.out::println);
+                    plataforma.getResumenes().forEach(c -> System.out.println(c.toString()));
                 }
                 case BUSCAR_POR_TITULO -> {
                     String titulo = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
@@ -77,6 +80,16 @@ public class Main {
                 case VER_POPULARES -> {
                     List<Pelicula> populares = plataforma.getPopulares();
                     populares.forEach(pelicula -> System.out.println(pelicula.obtenerFichaTecnica()));
+                }
+                case REPRODUCIR_CONTENIDO -> {
+                    String titulo = ScannerUtils.capturarTexto("Nombre del contenido a reproducir");
+                    Pelicula pelicula = plataforma.buscarPorTitulo(titulo);
+
+                    if (pelicula == null) {
+                        System.out.println("El contenido no existe");
+                    } else {
+                        plataforma.reproducir(pelicula);
+                    }
                 }
                 case ELIMINAR -> {
                     String titulo = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");

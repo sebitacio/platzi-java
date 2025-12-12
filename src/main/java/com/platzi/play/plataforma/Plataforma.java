@@ -2,19 +2,24 @@ package com.platzi.play.plataforma;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.platzi.play.contenido.Genero;
 import com.platzi.play.contenido.Pelicula;
+import com.platzi.play.contenido.ResumenContenido;
 import com.platzi.play.excepcion.PeliculaExistenteException;
 
 public class Plataforma {
     private String nombre;
     private List<Pelicula> contenido;
+    private Map<Pelicula, Integer> visualizaciones;
 
     public Plataforma(String nombre) {
         this.nombre = nombre;
         this.contenido = new ArrayList<>();
+        this.visualizaciones = new HashMap<>();
     }
 
     public void agregar(Pelicula elemento) {
@@ -24,6 +29,23 @@ public class Plataforma {
         }
         this.contenido.add(elemento);
     }
+
+    public void reproducir(Pelicula pelicula) {
+        int conteoActual = visualizaciones.getOrDefault(pelicula, 0);
+        System.out.println("El contenido %s se ha reproducito %d veces".formatted(
+            pelicula.getTitulo(),
+            conteoActual
+        ));
+        this.contarVisualizacion(pelicula);
+        pelicula.reproducir();
+    }
+
+    private void contarVisualizacion(Pelicula pelicula){
+        visualizaciones.put(
+            pelicula,
+            visualizaciones.getOrDefault(pelicula, 0) + 1
+        );
+    };
 
     public void eliminar(Pelicula pelicula) {
         this.contenido.remove(pelicula);
@@ -45,6 +67,16 @@ public class Plataforma {
     public List<String> getTitulos() {
         return contenido.stream()
             .map(Pelicula::getTitulo)
+            .toList();
+    }
+
+    public List<ResumenContenido> getResumenes(){
+        return contenido.stream()
+            .map(pelicula -> new ResumenContenido(
+                pelicula.getTitulo(),
+                pelicula.getDuracion(),
+                pelicula.getGenero()
+            ))
             .toList();
     }
 

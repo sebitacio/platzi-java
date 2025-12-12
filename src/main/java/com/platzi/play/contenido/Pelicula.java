@@ -34,7 +34,7 @@ public class Pelicula {
         return """
                 ✨ %s (%d)
                 Género: %s
-                Calificación: %s
+                Calificación: %d
                 """.formatted(
                 titulo,
                 estreno.getYear(),
